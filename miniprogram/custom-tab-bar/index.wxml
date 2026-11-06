@@ -1,0 +1,14 @@
+<view class="tabbar" style="--theme: {{theme}}">
+  <view class="tab {{active === 0 ? 'tab-active' : ''}}" bindtap="switchTab" data-idx="0" data-url="/pages/home/index">
+    <view class="tab-icon">{{active === 0 ? '📡' : '🔍'}}</view>
+    <view class="tab-text">选址</view>
+  </view>
+  <view class="tab {{active === 1 ? 'tab-active' : ''}}" bindtap="switchTab" data-idx="1" data-url="/pages/index/index">
+    <view class="tab-icon">{{active === 1 ? '📊' : '📋'}}</view>
+    <view class="tab-text">评估</view>
+  </view>
+  <view class="tab {{active === 2 ? 'tab-active' : ''}}" bindtap="switchTab" data-idx="2" data-url="/pages/history/index">
+    <view class="tab-icon">{{active === 2 ? '🗂️' : '📁'}}</view>
+    <view class="tab-text">我的</view>
+  </view>
+</view>

@@ -1,0 +1,227 @@
+.page { background: #0F1923; padding-bottom: calc(120rpx + env(safe-area-inset-bottom)); }
+
+.score-card {
+  background: linear-gradient(160deg, #1C2A38 0%, #0F1923 100%);
+  padding: 60rpx 40rpx 48rpx;
+  text-align: center;
+  position: relative;
+  border-bottom: 1rpx solid rgba(255,255,255,0.06);
+}
+.score-num { font-size: 120rpx; font-weight: 800; line-height: 1; color: var(--theme); }
+.score-label { font-size: 28rpx; color: rgba(255,255,255,0.5); margin: 8rpx 0 24rpx; }
+.summary { font-size: 28rpx; line-height: 1.6; color: rgba(255,255,255,0.85); }
+
+.section {
+  background: #1C2A38;
+  margin: 16rpx 24rpx;
+  border-radius: 20rpx;
+  padding: 36rpx 32rpx;
+  border: 1rpx solid rgba(255,255,255,0.06);
+}
+.section-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 28rpx;
+  padding-left: 16rpx;
+  border-left: 4rpx solid var(--theme);
+}
+
+.score-row { display: flex; justify-content: space-around; margin-bottom: 40rpx; }
+.score-item { text-align: center; }
+.score-item-num { font-size: 56rpx; font-weight: 700; color: var(--theme); }
+.score-item-label { font-size: 24rpx; color: rgba(255,255,255,0.4); margin-top: 8rpx; }
+
+.score-detail { display: flex; flex-direction: column; gap: 24rpx; }
+.detail-item { display: flex; gap: 16rpx; }
+.detail-tag {
+  flex-shrink: 0;
+  font-size: 22rpx;
+  color: var(--theme);
+  background: rgba(255,107,53,0.15);
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+  height: fit-content;
+  margin-top: 4rpx;
+  border: 1rpx solid rgba(255,107,53,0.3);
+}
+.detail-comment { font-size: 26rpx; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.tag {
+  padding: 14rpx 28rpx;
+  background: rgba(255,107,53,0.15);
+  color: var(--theme);
+  border-radius: 50rpx;
+  font-size: 26rpx;
+  border: 1rpx solid rgba(255,107,53,0.25);
+}
+
+.pricing-box {
+  background: rgba(255,107,53,0.08);
+  border-radius: 16rpx;
+  border: 1rpx solid rgba(255,107,53,0.2);
+  padding: 32rpx;
+  text-align: center;
+}
+.pricing-range { font-size: 44rpx; font-weight: 700; color: var(--theme); margin-bottom: 16rpx; }
+.pricing-sub { font-size: 26rpx; color: rgba(255,255,255,0.45); }
+
+.improvement-item { display: flex; gap: 20rpx; margin-bottom: 32rpx; }
+.imp-priority {
+  flex-shrink: 0;
+  font-size: 22rpx;
+  padding: 4rpx 14rpx;
+  border-radius: 8rpx;
+  height: fit-content;
+  margin-top: 4rpx;
+}
+.high { background: rgba(231,76,60,0.2); color: #FF6B6B; }
+.medium { background: rgba(255,107,53,0.2); color: #FF9A6C; }
+.low { background: rgba(52,152,219,0.2); color: #7EC8E3; }
+
+.imp-title { font-size: 28rpx; font-weight: 600; color: #fff; margin-bottom: 8rpx; }
+.imp-detail { font-size: 26rpx; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+.compliance {
+  display: flex;
+  gap: 16rpx;
+  align-items: flex-start;
+  background: rgba(243,156,18,0.1);
+  border-left: 6rpx solid #F39C12;
+  border-radius: 0 12rpx 12rpx 0;
+  padding: 20rpx;
+}
+.compliance-icon { font-size: 36rpx; flex-shrink: 0; }
+.compliance-text { font-size: 26rpx; color: rgba(255,255,255,0.65); line-height: 1.6; }
+
+.footer-btn { padding: 32rpx 24rpx; display: flex; flex-direction: column; gap: 16rpx; }
+.footer-row { display: flex; gap: 16rpx; }
+.btn-share-friend {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 50rpx;
+  background: rgba(255,255,255,0.08);
+  border: 2rpx solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.7);
+  font-size: 28rpx;
+  font-weight: 500;
+}
+.btn-primary {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 50rpx;
+  background: var(--theme);
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 600;
+  border: none;
+}
+.btn-share {
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 50rpx;
+  background: transparent;
+  color: var(--theme);
+  border: 2rpx solid var(--theme);
+  font-size: 30rpx;
+  font-weight: 600;
+  width: 100%;
+}
+
+/* 海报弹层 */
+.poster-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.poster-wrap {
+  background: #1C2A38;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  width: 680rpx;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+  border: 1rpx solid rgba(255,255,255,0.08);
+}
+.poster-preview-title { font-size: 30rpx; font-weight: 600; color: #fff; align-self: flex-start; }
+.poster-preview-box {
+  width: 600rpx;
+  height: 72vh;
+  border-radius: 16rpx;
+  background: #243447;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.poster-scroll { width: 100%; height: 100%; }
+.poster-img-preview { width: 600rpx; display: block; }
+.poster-canvas-hidden { width: 600rpx; height: 900rpx; position: fixed; left: -9999rpx; top: -9999rpx; }
+.poster-tip { font-size: 22rpx; color: rgba(255,255,255,0.35); }
+.poster-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  font-size: 28rpx;
+  color: rgba(255,255,255,0.45);
+  width: 100%;
+  height: 100%;
+}
+.poster-save {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 50rpx;
+  background: var(--theme);
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 6rpx 24rpx rgba(255,107,53,0.35);
+}
+.poster-close {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 50rpx;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.5);
+  font-size: 28rpx;
+  border: none;
+}
+
+.loading-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  background: #0F1923;
+}
+.loading-icon { font-size: 100rpx; margin-bottom: 32rpx; }
+.loading-text { font-size: 36rpx; font-weight: 600; color: #fff; margin-bottom: 16rpx; }
+.loading-sub { font-size: 26rpx; color: rgba(255,255,255,0.4); }
+.btn-retry {
+  margin-top: 48rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  padding: 0 64rpx;
+  border-radius: 50rpx;
+  background: var(--theme);
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 600;
+  border: none;
+}

@@ -1,0 +1,113 @@
+<view class="page" style="background:#0F1923;--theme:{{currentTheme}}">
+  <!-- 顶部导航栏 -->
+  <view class="topbar">
+    <view class="topbar-title">摆摊AI助手</view>
+    <view class="theme-btn" bindtap="openTheme">🎨</view>
+  </view>
+
+  <!-- 主题色选择弹窗 -->
+  <view wx:if="{{showTheme}}" class="theme-mask" bindtap="closeTheme"></view>
+  <view wx:if="{{showTheme}}" class="theme-panel">
+    <view class="theme-panel-title">选择主题色</view>
+    <view class="theme-colors">
+      <view wx:for="{{themeColors}}" wx:key="color"
+        class="theme-color-item {{currentTheme === item.color ? 'theme-color-active' : ''}}"
+        bindtap="selectTheme" data-color="{{item.color}}"
+        style="background:{{item.color}}">
+        <view wx:if="{{currentTheme === item.color}}" class="theme-check">✓</view>
+      </view>
+    </view>
+    <view class="theme-labels">
+      <view wx:for="{{themeColors}}" wx:key="color" class="theme-label">{{item.name}}</view>
+    </view>
+  </view>
+
+  <!-- 雷达区域 -->
+  <view class="radar-wrap">
+    <!-- 科技感标题 -->
+    <view class="radar-title-wrap">
+      <view class="radar-title">
+        <text class="title-normal">摊位</text><text class="title-accent">雷达</text>
+      </view>
+      <view class="radar-title-sub">智能扫描周边500米 · 找最佳摆摊位置</view>
+      <view class="radar-title-line"></view>
+    </view>
+
+    <view class="radar-bg">
+      <view class="circle c1"></view>
+      <view class="circle c2"></view>
+      <view class="circle c3"></view>
+      <view class="radar-scan {{analyzing ? 'scanning-fast' : 'scanning'}}"></view>
+      <view class="radar-center">
+        <view class="center-dot"></view>
+        <view class="center-ring"></view>
+      </view>
+    </view>
+
+    <view class="radar-status">
+      <view wx:if="{{!analyzing}}" class="status-idle">
+        <view class="status-text">{{address || '获取位置中...'}}</view>
+      </view>
+      <view wx:if="{{analyzing}}" class="status-scanning">
+        <view class="status-text scanning-text">正在扫描周边500米...</view>
+        <view class="status-sub">AI分析中，约需15秒</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 按钮区域 -->
+  <view class="btn-area" wx:if="{{!analyzing}}">
+    <button class="btn-scan" bindtap="analyze">一键搜寻最佳摆摊位置</button>
+  </view>
+</view>
+
+<!-- 结果弹窗 -->
+<view wx:if="{{result}}" class="popup-mask" bindtap="closePopup"></view>
+<view wx:if="{{result}}" class="popup" style="--theme:{{currentTheme}}">
+  <view class="popup-handle"></view>
+  <view class="popup-header">
+    <view class="popup-title">📍 选址结果</view>
+    <view class="popup-close" bindtap="closePopup">✕</view>
+  </view>
+
+  <!-- 评分行 -->
+  <view class="card-header">
+    <view class="score-circle" style="border-color:{{scoreColor}}">
+      <view class="score-num" style="color:{{scoreColor}}">{{result.score}}</view>
+      <view class="score-label">分</view>
+    </view>
+    <view class="card-header-right">
+      <view class="verdict-badge" style="background:{{verdictBg}};color:{{verdictColor}}">{{result.verdict}}</view>
+      <view class="card-spot">{{result.spot || address}}</view>
+      <view class="card-crowd">👥 {{result.crowd_type}}</view>
+    </view>
+  </view>
+
+  <!-- 分析理由 -->
+  <view class="card-reason">
+    <view class="reason-text">{{result.reason}}</view>
+  </view>
+
+  <!-- 最佳时段 -->
+  <view class="card-time">🕐 {{result.best_time}}</view>
+
+  <!-- 推荐品类 -->
+  <view class="tags-row">
+    <view wx:for="{{result.best_category}}" wx:key="*this" class="tag-item">{{item}}</view>
+  </view>
+
+  <!-- 风险 -->
+  <view class="risk-bar">
+    <view>⚠️</view>
+    <view class="risk-text">{{result.risk}}</view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="popup-actions">
+    <button class="btn-full-eval" bindtap="goFullEval">获取完整摆摊方案 →</button>
+    <view class="popup-actions-row">
+      <button class="btn-save {{saved ? 'btn-saved' : ''}}" bindtap="saveResult">{{saved ? '✓ 已保存' : '保存记录'}}</button>
+      <button class="btn-rescan-sm" bindtap="rescan">重新扫描</button>
+    </view>
+  </view>
+</view>

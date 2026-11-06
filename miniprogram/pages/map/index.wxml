@@ -1,0 +1,57 @@
+<view class="page" style="--theme:{{theme}}">
+  <map
+    id="map"
+    class="map"
+    longitude="{{longitude}}"
+    latitude="{{latitude}}"
+    scale="{{scale}}"
+    enable-rotate="{{false}}"
+    enable-3D="{{false}}"
+    bindregionchange="onRegionChange"
+  ></map>
+
+  <!-- 顶部搜索框 -->
+  <view class="search-bar">
+    <view class="search-inner">
+      <text class="search-icon-text">🔍</text>
+      <input
+        class="search-input"
+        placeholder="搜索地址或地点"
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        confirm-type="search"
+      />
+      <text wx:if="{{searchKeyword}}" class="search-clear" bindtap="clearSearch">✕</text>
+    </view>
+    <!-- 搜索结果下拉 -->
+    <view wx:if="{{searchResults.length > 0}}" class="search-results">
+      <view wx:for="{{searchResults}}" wx:key="id"
+        class="search-result-item" bindtap="selectSearchResult" data-idx="{{index}}">
+        <view class="result-title">{{item.title}}</view>
+        <view class="result-addr">{{item.address}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 中心固定图钉 -->
+  <view class="pin-wrap">
+    <view class="pin">📍</view>
+  </view>
+
+  <!-- 底部地址卡片 -->
+  <view class="addr-card">
+    <view class="addr-row">
+      <view class="addr-icon">📍</view>
+      <view class="addr-info">
+        <view wx:if="{{addrName}}" class="addr-name">{{addrName}}</view>
+        <view wx:elif="{{locating}}" class="addr-name addr-loading">解析地址中...</view>
+        <view wx:else class="addr-name addr-placeholder">移动地图选择摊位位置</view>
+        <view wx:if="{{addrDetail}}" class="addr-detail">{{addrDetail}}</view>
+      </view>
+    </view>
+    <view class="addr-tip">拖动地图精确选点，或在上方搜索地址</view>
+    <button class="btn-confirm {{addrName ? '' : 'btn-disabled'}}" bindtap="confirm" disabled="{{!addrName}}">
+      确认选择此位置
+    </button>
+  </view>
+</view>

@@ -1,0 +1,48 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/index/index",
+    "pages/questionnaire/index",
+    "pages/map/index",
+    "pages/report/index",
+    "pages/history/index"
+  ],
+  "window": {
+    "backgroundColor": "#0F1923",
+    "backgroundColorTop": "#0F1923",
+    "backgroundColorBottom": "#0F1923",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#0F1923",
+    "navigationBarTitleText": "摆摊AI助手",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#8A9BB0",
+    "selectedColor": "#FF6B35",
+    "backgroundColor": "#162030",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "选址"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "评估"
+      },
+      {
+        "pagePath": "pages/history/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于获取你的当前位置，帮助选择摊位地点"
+    }
+  },
+  "requiredPrivateInfos": ["getLocation"],
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

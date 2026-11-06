@@ -1,0 +1,38 @@
+<view class="page" style="background:#0F1923;--theme:{{theme}}">
+  <!-- 头部 -->
+  <view class="hero">
+    <view class="hero-badge">AI 选址评估</view>
+    <view class="hero-title">找到你的<text class="hero-highlight">黄金摊位</text></view>
+    <view class="hero-desc">1分钟填写 · AI深度分析 · 专属方案</view>
+  </view>
+
+  <!-- 功能卡片网格 -->
+  <view class="feature-grid">
+    <view class="feature-card">
+      <view class="feature-card-icon">📍</view>
+      <view class="feature-card-name">选址分析</view>
+      <view class="feature-card-sub">人流与竞争</view>
+    </view>
+    <view class="feature-card">
+      <view class="feature-card-icon">🛍️</view>
+      <view class="feature-card-name">选品推荐</view>
+      <view class="feature-card-sub">匹配客群</view>
+    </view>
+    <view class="feature-card">
+      <view class="feature-card-icon">💰</view>
+      <view class="feature-card-name">定价策略</view>
+      <view class="feature-card-sub">合理区间</view>
+    </view>
+    <view class="feature-card">
+      <view class="feature-card-icon">📋</view>
+      <view class="feature-card-name">运营建议</view>
+      <view class="feature-card-sub">时段话术</view>
+    </view>
+  </view>
+
+  <view class="btn-wrap">
+    <button class="btn-primary" bindtap="startEval">开始评估 →</button>
+  </view>
+
+  <view class="tip">完全免费 · AI即时生成报告</view>
+</view>

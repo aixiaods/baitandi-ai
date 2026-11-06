@@ -1,0 +1,131 @@
+<view class="page" wx:if="{{report}}" style="--theme:{{theme}}">
+  <!-- 总评分卡 -->
+  <view class="score-card">
+    <view class="score-num">{{report.overall_score}}</view>
+    <view class="score-label">综合评分</view>
+    <view class="summary">{{report.summary}}</view>
+  </view>
+
+  <!-- 分项评分 -->
+  <view class="section">
+    <view class="section-title">分项评分</view>
+    <view class="score-row">
+      <view class="score-item">
+        <view class="score-item-num" style="color:{{scores.location.color}}">{{report.scores.location.score}}</view>
+        <view class="score-item-label">选址</view>
+      </view>
+      <view class="score-item">
+        <view class="score-item-num" style="color:{{scores.category.color}}">{{report.scores.category.score}}</view>
+        <view class="score-item-label">选品</view>
+      </view>
+      <view class="score-item">
+        <view class="score-item-num" style="color:{{scores.pricing.color}}">{{report.scores.pricing.score}}</view>
+        <view class="score-item-label">定价</view>
+      </view>
+      <view class="score-item">
+        <view class="score-item-num" style="color:{{scores.operation.color}}">{{report.scores.operation.score}}</view>
+        <view class="score-item-label">运营</view>
+      </view>
+    </view>
+
+    <view class="score-detail">
+      <view class="detail-item">
+        <view class="detail-tag">选址</view>
+        <view class="detail-comment">{{report.scores.location.comment}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="detail-tag">选品</view>
+        <view class="detail-comment">{{report.scores.category.comment}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="detail-tag">定价</view>
+        <view class="detail-comment">{{report.scores.pricing.comment}}</view>
+      </view>
+      <view class="detail-item">
+        <view class="detail-tag">运营</view>
+        <view class="detail-comment">{{report.scores.operation.comment}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 推荐品类 -->
+  <view class="section" wx:if="{{report.category_suggestion && report.category_suggestion.length}}">
+    <view class="section-title">推荐品类</view>
+    <view class="tags">
+      <view wx:for="{{report.category_suggestion}}" wx:key="*this" class="tag">{{item}}</view>
+    </view>
+  </view>
+
+  <!-- 定价建议 -->
+  <view class="section">
+    <view class="section-title">定价建议</view>
+    <view class="pricing-box">
+      <view class="pricing-range">{{report.pricing_range.low}} - {{report.pricing_range.high}} {{report.pricing_range.unit}}</view>
+      <view class="pricing-sub">建议摆摊时段：{{bestTimeStr}}</view>
+    </view>
+  </view>
+
+  <!-- 改进建议 -->
+  <view class="section">
+    <view class="section-title">改进建议</view>
+    <view wx:for="{{report.improvements}}" wx:key="title" class="improvement-item">
+      <view class="imp-priority {{item.priority}}">{{item.priorityLabel}}</view>
+      <view class="imp-content">
+        <view class="imp-title">{{item.title}}</view>
+        <view class="imp-detail">{{item.detail}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 合规提示 -->
+  <view class="section compliance">
+    <view class="compliance-icon">⚠️</view>
+    <view class="compliance-text">{{report.compliance_tips}}</view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="footer-btn">
+    <button class="btn-share" bindtap="showPoster">生成分享海报</button>
+    <view class="footer-row">
+      <button class="btn-share-friend" open-type="share">分享给好友</button>
+      <button class="btn-primary" bindtap="goEvalAgain">重新评估</button>
+    </view>
+  </view>
+</view>
+
+<!-- canvas 始终在DOM中，视觉隐藏，用于绘制海报 -->
+<canvas type="2d" id="posterCanvas" class="poster-canvas-hidden"></canvas>
+
+<!-- 海报弹层 -->
+<view class="poster-mask" wx:if="{{showPoster}}" bindtap="hidePoster">
+  <view class="poster-wrap" catchtap="">
+    <view class="poster-preview-title">预览海报</view>
+
+    <view class="poster-preview-box">
+      <view wx:if="{{posterLoading}}" class="poster-loading">
+        <view>⏳</view>
+        <view>生成中...</view>
+      </view>
+      <scroll-view wx:if="{{posterImage}}" scroll-y class="poster-scroll" enhanced show-scrollbar="{{false}}">
+        <image src="{{posterImage}}" class="poster-img-preview" mode="widthFix" show-menu-by-longpress="true"></image>
+      </scroll-view>
+    </view>
+
+    <view wx:if="{{posterImage}}" class="poster-tip">↕️ 可上下滑动 · 长按图片直接保存</view>
+    <button class="poster-save" wx:if="{{posterImage}}" bindtap="savePoster">保存完整图到相册</button>
+    <button class="poster-close" bindtap="hidePoster">关闭</button>
+  </view>
+</view>
+
+<view class="loading-page" wx:if="{{loadError}}" style="--theme:{{theme}}">
+  <view class="loading-icon">⚠️</view>
+  <view class="loading-text">加载失败</view>
+  <view class="loading-sub">网络异常，请返回重试</view>
+  <button class="btn-retry" bindtap="goEvalAgain">重新评估</button>
+</view>
+
+<view class="loading-page" wx:if="{{!report && !loadError}}" style="--theme:{{theme}}">
+  <view class="loading-icon">🤖</view>
+  <view class="loading-text">AI正在分析中...</view>
+  <view class="loading-sub">大约需要10-20秒</view>
+</view>

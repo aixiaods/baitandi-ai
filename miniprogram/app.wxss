@@ -1,0 +1,21 @@
+page {
+  background: #0F1923;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+  --theme: #FF6B35;
+}
+
+button { background: initial; }
+button:focus { outline: 0; }
+button::after { border: none; }
+
+.btn-primary {
+  background: var(--theme);
+  color: #fff;
+  border-radius: 50rpx;
+  border: none;
+  font-size: 32rpx;
+  font-weight: 500;
+  height: 88rpx;
+  line-height: 88rpx;
+  width: 100%;
+}

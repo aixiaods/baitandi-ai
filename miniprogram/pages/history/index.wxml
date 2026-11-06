@@ -1,0 +1,27 @@
+<view class="page" style="background:#0F1923;--theme:{{theme}}">
+  <view wx:if="{{list.length === 0}}" class="empty">
+    <view class="empty-icon">📋</view>
+    <view class="empty-text">还没有报告</view>
+    <view class="empty-sub">完成评估后报告会保存在这里</view>
+    <button class="btn-primary" style="margin-top:48rpx" bindtap="goEval">去评估</button>
+  </view>
+
+  <view wx:else class="list-wrap">
+    <view wx:for="{{list}}" wx:key="_id" class="report-card">
+      <view class="card-body" bindtap="viewReport" data-id="{{item._id}}">
+        <view class="card-left">
+          <view class="card-score">{{item.report.overall_score}}</view>
+          <view class="card-score-label">分</view>
+        </view>
+        <view class="card-right">
+          <view class="card-summary">{{item.report.summary}}</view>
+          <view class="card-meta">{{item.input.city || '未知城市'}}{{item.input.locationType ? ' · ' + item.input.locationType : ''}}</view>
+          <view class="card-time">{{item.createTimeStr}}</view>
+        </view>
+      </view>
+      <view class="card-footer">
+        <view class="card-delete-btn" bindtap="confirmDelete" data-id="{{item._id}}">删除记录</view>
+      </view>
+    </view>
+  </view>
+</view>

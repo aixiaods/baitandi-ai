@@ -1,0 +1,193 @@
+<view class="page" style="--theme:{{theme}}">
+  <!-- 顶部导航栏 -->
+  <view class="topbar">
+    <view class="topbar-back" bindtap="handleBack">
+      <text class="back-arrow">‹</text>
+    </view>
+    <view class="topbar-steps">
+      <view class="step-dots">
+        <view class="step-dot {{step >= 1 ? 'dot-active' : ''}}"></view>
+        <view class="step-line {{step >= 2 ? 'line-active' : ''}}"></view>
+        <view class="step-dot {{step >= 2 ? 'dot-active' : ''}}"></view>
+        <view class="step-line {{step >= 3 ? 'line-active' : ''}}"></view>
+        <view class="step-dot {{step >= 3 ? 'dot-active' : ''}}"></view>
+      </view>
+      <view class="step-labels">
+        <view class="step-label {{step === 1 ? 'label-active' : ''}}">基本信息</view>
+        <view class="step-label {{step === 2 ? 'label-active' : ''}}">时间安排</view>
+        <view class="step-label {{step === 3 ? 'label-active' : ''}}">品类意向</view>
+      </view>
+    </view>
+    <view class="topbar-placeholder"></view>
+  </view>
+
+  <!-- 第1步：基本信息 -->
+  <view wx:if="{{step === 1}}" class="step-wrap">
+    <view class="step-title">你的摊位在哪里？</view>
+    <view class="step-sub">先确定位置，AI才能分析周边环境</view>
+
+    <view class="field">
+      <view wx:if="{{form.address}}" class="location-confirmed">
+        <view class="location-confirmed-addr">📍 {{form.address}}</view>
+        <view class="location-actions">
+          <view class="loc-btn" bindtap="relocate">重新定位</view>
+          <view class="loc-btn" bindtap="openMap">地图选点/搜索</view>
+        </view>
+      </view>
+      <view wx:else class="location-empty">
+        <view wx:if="{{locating}}" class="locating-tip">定位中...</view>
+        <view wx:else class="location-btns">
+          <view class="loc-btn-primary" bindtap="relocate">📍 自动定位</view>
+          <view class="loc-btn-secondary" bindtap="openMap">🗺️ 地图选点/搜索</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="label">启动预算大概多少？</view>
+      <view class="card-options">
+        <view wx:for="{{budgetOptions}}" wx:key="*this"
+          class="card-option {{form.budget === item ? 'card-option-active' : ''}}"
+          bindtap="selectOption" data-key="budget" data-val="{{item}}">
+          <view class="card-option-text">{{item}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="label">摆摊目标是？</view>
+      <view class="card-options">
+        <view class="card-option {{form.goal === '副业补贴' ? 'card-option-active' : ''}}"
+          bindtap="selectOption" data-key="goal" data-val="副业补贴">
+          <view class="card-option-icon">💼</view>
+          <view class="card-option-text">副业补贴</view>
+          <view class="card-option-sub">增加额外收入</view>
+        </view>
+        <view class="card-option {{form.goal === '全职创业' ? 'card-option-active' : ''}}"
+          bindtap="selectOption" data-key="goal" data-val="全职创业">
+          <view class="card-option-icon">🚀</view>
+          <view class="card-option-text">全职创业</view>
+          <view class="card-option-sub">以此为主业</view>
+        </view>
+        <view class="card-option {{form.goal === '先试试看' ? 'card-option-active' : ''}}"
+          bindtap="selectOption" data-key="goal" data-val="先试试看">
+          <view class="card-option-icon">🎯</view>
+          <view class="card-option-text">先试试看</view>
+          <view class="card-option-sub">探索可能性</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 第2步：时间安排 -->
+  <view wx:if="{{step === 2}}" class="step-wrap">
+    <view class="step-title">时间怎么安排？</view>
+    <view class="step-sub">摆摊时段影响客群和品类选择</view>
+
+    <view class="field">
+      <view class="label">计划在什么时间段摆摊？</view>
+      <view class="card-options">
+        <view class="card-option {{form.timeSlot === '早市 6:00-10:00' ? 'card-option-active' : ''}}"
+          bindtap="selectOption" data-key="timeSlot" data-val="早市 6:00-10:00">
+          <view class="card-option-icon">🌅</view>
+          <view class="card-option-text">早市</view>
+          <view class="card-option-sub">6:00-10:00</view>
+        </view>
+        <view class="card-option {{form.timeSlot === '午市 11:00-14:00' ? 'card-option-active' : ''}}"
+          bindtap="selectOption" data-key="timeSlot" data-val="午市 11:00-14:00">
+          <view class="card-option-icon">☀️</view>
+          <view class="card-option-text">午市</view>
+          <view class="card-option-sub">11:00-14:00</view>
+        </view>
+        <view class="card-option {{form.timeSlot === '下班后 17:00-22:00' ? 'card-option-active' : ''}}"
+          bindtap="selectOption" data-key="timeSlot" data-val="下班后 17:00-22:00">
+          <view class="card-option-icon">🌆</view>
+          <view class="card-option-text">下班后</view>
+          <view class="card-option-sub">17:00-22:00</view>
+        </view>
+        <view class="card-option {{form.timeSlot === '夜市 20:00-凌晨' ? 'card-option-active' : ''}}"
+          bindtap="selectOption" data-key="timeSlot" data-val="夜市 20:00-凌晨">
+          <view class="card-option-icon">🌙</view>
+          <view class="card-option-text">夜市</view>
+          <view class="card-option-sub">20:00-凌晨</view>
+        </view>
+        <view class="card-option {{form.timeSlot === '周末全天' ? 'card-option-active' : ''}}"
+          bindtap="selectOption" data-key="timeSlot" data-val="周末全天">
+          <view class="card-option-icon">📅</view>
+          <view class="card-option-text">周末全天</view>
+          <view class="card-option-sub">灵活安排</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="label">每天大约能摆几小时？</view>
+      <view class="card-options">
+        <view wx:for="{{hoursOptions}}" wx:key="*this"
+          class="card-option {{form.hoursPerDay === item ? 'card-option-active' : ''}}"
+          bindtap="selectOption" data-key="hoursPerDay" data-val="{{item}}">
+          <view class="card-option-text">{{item}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="label">有车方便运货吗？</view>
+      <view class="card-options">
+        <view class="card-option {{form.hasCar === true ? 'card-option-active' : ''}}"
+          bindtap="selectBool" data-key="hasCar" data-val="{{true}}">
+          <view class="card-option-icon">🚗</view>
+          <view class="card-option-text">有车</view>
+          <view class="card-option-sub">运货更方便</view>
+        </view>
+        <view class="card-option {{form.hasCar === false ? 'card-option-active' : ''}}"
+          bindtap="selectBool" data-key="hasCar" data-val="{{false}}">
+          <view class="card-option-icon">🚶</view>
+          <view class="card-option-text">没有</view>
+          <view class="card-option-sub">轻装上阵</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 第3步：品类意向 -->
+  <view wx:if="{{step === 3}}" class="step-wrap">
+    <view class="step-title">卖什么？</view>
+    <view class="step-sub">不确定也没关系，AI会结合你的位置推荐</view>
+
+    <view class="field">
+      <view class="card-options">
+        <view class="card-option {{!form.hasCategory ? 'card-option-active' : ''}}"
+          bindtap="toggleCategory" data-val="{{false}}">
+          <view class="card-option-icon">🤖</view>
+          <view class="card-option-text">让AI帮我推荐</view>
+          <view class="card-option-sub">根据位置智能推荐</view>
+        </view>
+        <view class="card-option {{form.hasCategory ? 'card-option-active' : ''}}"
+          bindtap="toggleCategory" data-val="{{true}}">
+          <view class="card-option-icon">💡</view>
+          <view class="card-option-text">我已有想法</view>
+          <view class="card-option-sub">告诉AI你的方向</view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{form.hasCategory}}" class="field">
+      <view class="label">你想卖什么？</view>
+      <input class="input" placeholder="如：烤冷面、手工饰品、水果" value="{{form.category}}" bindinput="onInput" data-key="category"/>
+    </view>
+
+    <view class="tip-box">
+      <view class="tip-text">✨ AI将综合位置、时间、品类给出专属评分与完整建议</view>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="footer">
+    <button wx:if="{{step > 1}}" class="btn-back" bindtap="prevStep">上一步</button>
+    <button wx:if="{{step < totalStep}}" class="btn-next" bindtap="nextStep">下一步</button>
+    <button wx:if="{{step === totalStep}}" class="btn-submit {{loading ? 'btn-loading' : ''}}" bindtap="submit" disabled="{{loading}}">
+      {{loading ? 'AI分析中...' : '生成报告'}}
+    </button>
+  </view>
+</view>
